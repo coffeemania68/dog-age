@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>견종 상세 정보</title>
+    <style>
+        .breed-detail-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .breed-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .breed-image {
+            width: 300px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 15px;
+        }
+
+        .breed-info {
+            flex: 1;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .breed-header {
+                flex-direction: column;
+            }
+
+            .breed-image {
+                width: 100%;
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="breed-detail-container">
+        <div class="breed-header">
+            <img class="breed-image" id="breedImage" alt="견종 이미지">
+            <div class="breed-info">
+                <h1 id="breedName"></h1>
+                <p id="characteristics"></p>
+                <p>평균 수명: <span id="lifespan"></span>년</p>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>운동 가이드</h3>
+                <p id="walkingTip"></p>
+            </div>
+            <div class="stat-card">
+                <h3>건강 관리</h3>
+                <p id="healthNote"></p>
+            </div>
+        </div>
+
+        <canvas id="characteristicsChart"></canvas>
+    </div>
+
+    <script type="module">
+        import dogBreeds from './data/breeds.js';
+
+        // URL에서 견종 정보 가져오기
+        const params = new URLSearchParams(window.location.search);
+        const breedName = params.get('breed');
+        const breedData = dogBreeds[breedName];
+
+        if (breedData) {
+            document.getElementById('breedImage').src = breedData.image;
+            document.getElementById('breedName').textContent = breedName;
+            document.getElementById('characteristics').textContent = breedData.characteristics;
+            document.getElementById('lifespan').textContent = breedData.lifespan;
+            document.getElementById('walkingTip').textContent = breedData.walkingTip;
+            document.getElementById('healthNote').textContent = breedData.healthNote;
+
+            // 차트 생성
+            createCharacteristicsChart(breedData.stats);
+        }
+    </script>
+</body>
+</html>
