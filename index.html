@@ -2,6 +2,652 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>강아지 나이 계산기</title>
+
+    <!-- SEO 메타태그 -->
+    <meta name="description" content="우리 강아지의 실제 나이를 정확하게 계산해보세요. 40여 가지 품종별 특성과 수명을 고려한 과학적인 나이 계산기입니다.">
+    <meta name="keywords" content="강아지 나이 계산기, 반려견 나이, 강아지 수명, 품종별 나이">
+
+    <!-- Open Graph 태그 -->
+    <meta property="og:title" content="강아지 나이 계산기 - 우리 강아지의 실제 나이 알아보기">
+    <meta property="og:description" content="우리 강아지의 실제 나이를 정확하게 계산해보세요. 40여 가지 품종별 특성과 수명을 고려한 과학적인 나이 계산기입니다.">
+    <meta property="og:image" content="https://mypawstory.com/wp-content/uploads/2024/11/%EB%B0%98%EB%A0%A4%EA%B2%AC-asmr.jpg">
+    <meta property="og:url" content="https://coffeemania68.github.io/dog-age/">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter 카드 -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="강아지 나이 계산기">
+    <meta name="twitter:description" content="우리 강아지의 실제 나이를 정확하게 계산해보세요. 40여 가지 품종별 특성과 수명을 고려한 과학적인 나이 계산기입니다.">
+    <meta name="twitter:image" content="https://mypawstory.com/wp-content/uploads/2024/11/%EB%B0%98%EB%A0%A4%EA%B2%AC-asmr.jpg">
+
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- 카카오톡 공유 SDK -->
+    <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+    
+    <!-- 카카오톡 초기화 및 공유 함수 -->
+    <script>
+        const kakaoApiKey = '110d468a677132abc8ddfe71b00c3939';
+        Kakao.init(kakaoApiKey);
+        
+        function shareKakao() {
+            Kakao.Link.sendDefault({
+                objectType: 'feed',
+                content: {
+                    title: '강아지 나이 계산기',
+                    description: '우리 강아지의 실제 나이를 정확하게 계산해보세요! 40여 가지 품종별 특성과 수명을 고려한 과학적인 나이 계산기입니다.',
+                    imageUrl: 'https://mypawstory.com/wp-content/uploads/2024/11/%EB%B0%98%EB%A0%A4%EA%B2%AC-asmr.jpg',
+                    link: {
+                        mobileWebUrl: 'https://coffeemania68.github.io/dog-age/',
+                        webUrl: 'https://coffeemania68.github.io/dog-age/'
+                    }
+                },
+                buttons: [
+                    {
+                        title: '나이 계산하기',
+                        link: {
+                            mobileWebUrl: 'https://coffeemania68.github.io/dog-age/',
+                            webUrl: 'https://coffeemania68.github.io/dog-age/'
+                        }
+                    }
+                ]
+            });
+        }
+
+        function shareFacebook() {
+            const url = encodeURIComponent('https://coffeemania68.github.io/dog-age/');
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, 
+                       'facebook-share-dialog', 
+                       'width=626,height=436');
+        }
+
+        function shareTwitter() {
+            const text = encodeURIComponent('우리 강아지의 실제 나이를 정확하게 계산해보세요!');
+            const url = encodeURIComponent('https://coffeemania68.github.io/dog-age/');
+            window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`,
+                       'twitter-share-dialog',
+                       'width=626,height=436');
+        }
+    </script>
+    
+        <style>
+        * {
+            -webkit-text-size-adjust: none;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            line-height: 1.6;
+            word-break: keep-all;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background-color: #f5f5f5;
+        }
+
+        .dog-age-calculator {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            color: #333;
+        }
+
+        .calculator-title {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+
+        .calculator-form {
+            max-width: 500px;
+            margin: 0 auto 30px;
+            background: #fff;
+            padding: 25px;
+            border-radius: 4px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .input-group select,
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .calculate-btn {
+            width: 100%;
+            padding: 12px;
+            background: #666;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .calculate-btn:hover {
+            background: #555;
+        }
+
+        .result-container {
+            display: none;
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            word-break: keep-all;
+        }
+
+        .breed-details {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .breed-details p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .main-info-card {
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .breed-image {
+            width: 200px;
+            height: 200px;
+            margin-right: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .breed-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .age-info {
+            flex: 1;
+        }
+
+        .breed-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .age-comparison {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            font-size: 18px;
+        }
+
+        .charts-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .chart-wrapper {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .chart-wrapper h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .chart-wrapper:last-child {
+            height: 250px;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .share-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: opacity 0.2s;
+        }
+
+        .share-button:hover {
+            opacity: 0.8;
+        }
+
+        .kakao {
+            background-color: #FEE500;
+            color: #000000;
+        }
+
+        .facebook {
+            background-color: #1877F2;
+            color: white;
+        }
+
+        .twitter {
+            background-color: #1DA1F2;
+            color: white;
+        }
+
+        .cta-button {
+            display: block;
+            width: 100%;
+            max-width: 500px;
+            margin: 30px auto;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #6e8efb, #4a6ee0);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            transition: transform 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        @media screen and (max-width: 768px) {
+            .chart-wrapper {
+                min-width: 100%;
+            }
+            
+            .dog-age-calculator {
+                padding: 10px;
+                margin: 10px;
+            }
+
+            .main-info-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .breed-image {
+                margin: 0 auto 20px;
+            }
+
+            .age-comparison {
+                font-size: 16px;
+            }
+
+            .breed-title {
+                font-size: 20px;
+            }
+
+            .basic-info, 
+            .walking-guide, 
+            .health-info {
+                font-size: 14px;
+                line-height: 1.6;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+
+    <body>
+    <div class="dog-age-calculator">
+        <h1 class="calculator-title">강아지 나이 계산기</h1>
+        
+        <div class="calculator-form">
+            <div class="input-group">
+                <label for="dogBreed">강아지 품종</label>
+                <select id="dogBreed" required>
+                    <option value="">품종을 선택하세요</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="dogAge">강아지 나이 (년)</label>
+                <input type="number" id="dogAge" min="0.5" max="20" step="0.5" required>
+            </div>
+            <button class="calculate-btn" onclick="calculateAndShowResults()">계산하기</button>
+        </div>
+
+        <div id="resultContainer" class="result-container">
+            <div class="main-info-card">
+                <div class="breed-image">
+                    <img id="breedImage" src="" alt="강아지 품종 이미지">
+                </div>
+                <div class="age-info">
+                    <h2 class="breed-title"></h2>
+                    <div class="age-comparison">
+                        <p class="dog-age"></p>
+                        <p class="human-age"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="breed-details">
+                <p class="basic-info"></p>
+                <p class="walking-guide"></p>
+                <p class="health-info"></p>
+            </div>
+
+            <div class="charts-container">
+                <div class="chart-wrapper">
+                    <h3>강아지 특성</h3>
+                    <canvas id="characteristicsChart"></canvas>
+                </div>
+                <div class="chart-wrapper">
+                    <h3>수명 비교</h3>
+                    <canvas id="lifeExpectancyChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- 공유 버튼들 -->
+        <div class="share-buttons">
+            <button onclick="shareKakao()" class="share-button kakao">
+                카카오톡 공유
+            </button>
+            <button onclick="shareFacebook()" class="share-button facebook">
+                페이스북 공유
+            </button>
+            <button onclick="shareTwitter()" class="share-button twitter">
+                트위터 공유
+            </button>
+        </div>
+
+        <!-- CTA 버튼 -->
+        <a href="http://puppy-intellect-playground.lovable.app/" target="_blank" rel="noopener noreferrer" class="cta-button">
+            우리집 강아지 천재견 만들기 프로젝트 바로가기 🐕
+        </a>
+    </div>
+    <script>
+        // 품종 데이터
+        const dogBreeds = {
+            "그레이트 데인": { 
+                lifespan: "8-10", 
+                ageRate: 8.0, 
+                image: "https://blog.kakaocdn.net/dn/ptllI/btsLhM2tSKj/aeMMk6g8Wgi46nV6kgllIk/img.png", 
+                stats: { exercise: 7, grooming: 4, training: 6, health: 5, social: 7 }, 
+                characteristics: "거대하지만 온순한 성격의 대형견입니다.", 
+                healthNote: "고관절 이형성증과 심장병에 주의가 필요합니다.", 
+                walkingTip: "하루 2회, 각 30분의 가벼운 운동이 적당합니다.", 
+                blogUrl: "/great-dane-care" 
+            },
+            "그레이하운드": { 
+                lifespan: "10-13", 
+                ageRate: 7.3, 
+                image: "https://wrtn-image-user-output.s3.ap-northeast-2.amazonaws.com/648758005bfa0c92543455b6/79e3d1c6-fd25-4ab1-9088-cf983c63dc1c.png", 
+                stats: { exercise: 8, grooming: 3, training: 5, health: 7, social: 6 }, 
+                characteristics: "빠른 속도와 우아한 체형을 가진 견종입니다.", 
+                healthNote: "치아 관리와 운동 후 휴식이 중요합니다.", 
+                walkingTip: "하루 2회, 각 30-40분의 운동이 필요합니다.", 
+                blogUrl: "/greyhound-care" 
+            },
+            "골든 리트리버": { 
+                lifespan: "10-12", 
+                ageRate: 7.5, 
+                image: "https://blog.kakaocdn.net/dn/MIGgR/btsLgo9BEpx/4KhKzagp75umESsc8ftHbk/img.webp", 
+                stats: { exercise: 7, grooming: 7, training: 3, health: 6, social: 9 }, 
+                characteristics: "친근하고 지능적인 대표적인 가정견입니다.", 
+                healthNote: "고관절 이형성증과 피부병에 주의가 필요합니다.", 
+                walkingTip: "하루 2회, 각 30-40분의 운동이 필요합니다.", 
+                blogUrl: "/golden-retriever-care" 
+            },
+            // ... 나머지 견종 데이터 ...
+        };
+
+        // 페이지 로드 시 품종 옵션 추가
+        window.onload = function() {
+            const breedSelect = document.getElementById('dogBreed');
+            
+            // 기본 옵션
+            breedSelect.innerHTML = '<option value="">품종을 선택하세요</option>';
+            
+            // dogBreeds 객체의 키(품종명)들을 옵션으로 추가
+            Object.keys(dogBreeds).sort().forEach(breed => {
+                const option = document.createElement('option');
+                option.value = breed;
+                option.textContent = breed;
+                breedSelect.appendChild(option);
+            });
+        };
+
+        function calculateAndShowResults() {
+            const selectedBreed = document.getElementById('dogBreed').value;
+            const dogAge = parseFloat(document.getElementById('dogAge').value);
+            
+            if (!selectedBreed) {
+                alert('품종을 선택해주세요.');
+                return;
+            }
+            if (isNaN(dogAge) || dogAge < 0.5 || dogAge > 20) {
+                alert('나이는 0.5~20 사이의 숫자를 입력해주세요.');
+                return;
+            }
+
+            const breedData = dogBreeds[selectedBreed];
+            const humanAge = Math.round(dogAge * breedData.ageRate);
+            
+            const resultContainer = document.getElementById('resultContainer');
+            resultContainer.style.display = 'block';
+
+            document.getElementById('breedImage').src = breedData.image;
+            document.querySelector('.breed-title').textContent = selectedBreed;
+            document.querySelector('.dog-age').textContent = `강아지 나이: ${dogAge}살`;
+            document.querySelector('.human-age').textContent = `사람 나이: 약 ${humanAge}살`;
+            
+            document.querySelector('.basic-info').innerHTML = `
+                <strong>기본 정보:</strong><br>
+                평균 수명: ${breedData.lifespan}년<br>
+                ${breedData.characteristics}
+            `;
+            
+            document.querySelector('.walking-guide').innerHTML = `
+                <strong>산책 가이드:</strong><br>
+                ${breedData.walkingTip}
+            `;
+            
+            document.querySelector('.health-info').innerHTML = `
+                <strong>건강 관리:</strong><br>
+                ${breedData.healthNote}
+            `;
+
+            if (breedData.stats) {
+                createCharacteristicsChart(breedData.stats);
+            }
+            if (breedData.lifespan) {
+                createLifeExpectancyChart(breedData.lifespan);
+            }
+        }
+
+        function createCharacteristicsChart(stats) {
+            const ctx = document.getElementById('characteristicsChart').getContext('2d');
+            
+            if (window.characteristicsChart instanceof Chart) {
+                window.characteristicsChart.destroy();
+            }
+            
+            window.characteristicsChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['운동량', '그루밍', '훈련난이도', '건강관리', '사회성'],
+                    datasets: [{
+                        label: '특성 점수 (1-10)',
+                        data: [
+                            stats.exercise,
+                            stats.grooming,
+                            stats.training,
+                            stats.health,
+                            stats.social
+                        ],
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        pointBackgroundColor: 'rgba(54, 162, 235, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(54, 162, 235, 1)'
+                    }]
+                },
+                options: {
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 10,
+                            ticks: {
+                                stepSize: 2
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        }
+
+        function createLifeExpectancyChart(lifespan) {
+            const ctx = document.getElementById('lifeExpectancyChart').getContext('2d');
+            
+            if (window.lifeExpectancyChart instanceof Chart) {
+                window.lifeExpectancyChart.destroy();
+            }
+            
+            const [minLife, maxLife] = lifespan.split('-').map(Number);
+            
+            window.lifeExpectancyChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['평균 수명'],
+                    datasets: [{
+                        label: '최소',
+                        data: [minLife],
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: '최대',
+                        data: [maxLife],
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 20,
+                            ticks: {
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: '예상 수명 범위 (년)',
+                            font: {
+                                size: 16
+                            }
+                        },
+                        legend: {
+                            labels: {
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
+        
+
+
+
+
+
+
+        
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    !DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>강아지 나이 계산기 - 우리 강아지의 실제 나이 알아보기</title>
     
