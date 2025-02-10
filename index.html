@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>강아지 나이 계산기 - 우리 강아지의 실제 나이 알아보기</title>
+    
+    <!-- SEO 메타태그 -->
+    <meta name="description" content="우리 강아지의 실제 나이를 정확하게 계산해보세요. 품종별 특성과 수명을 고려한 과학적인 나이 계산기입니다.">
+    <meta name="keywords" content="강아지 나이 계산기, 반려견 나이, 강아지 수명, 품종별 나이">
+    
+    <!-- Open Graph 태그 -->
+    <meta property="og:title" content="강아지 나이 계산기 - 우리 강아지의 실제 나이 알아보기">
+    <meta property="og:description" content="우리 강아지의 실제 나이를 정확하게 계산해보세요. 품종별 특성과 수명을 고려한 과학적인 나이 계산기입니다.">
+    <meta property="og:image" content="https://example.com/images/dog-age-calculator-og.jpg">
+    <meta property="og:url" content="https://example.com/dog-age-calculator">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter 카드 -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="강아지 나이 계산기">
+    <meta name="twitter:description" content="우리 강아지의 실제 나이를 정확하게 계산해보세요.">
+    <meta name="twitter:image" content="https://example.com/images/dog-age-calculator-og.jpg">
+
+    <!-- 기존 스타일시트 유지 -->
+    <style>
+        /* 기존 스타일 유지 */
+        
+        /* 새로운 스타일 추가 */
+        .cta-button {
+            display: block;
+            width: 100%;
+            max-width: 500px;
+            margin: 30px auto;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #6e8efb, #4a6ee0);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            transition: transform 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        .share-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .share-button {
+            padding: 10px 20px;
+            border-radius: 5px;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .share-button.kakao {
+            background-color: #FEE500;
+            color: #000000;
+        }
+
+        .share-button.facebook {
+            background-color: #1877F2;
+        }
+
+        .share-button.twitter {
+            background-color: #1DA1F2;
+        }
+
+        @media (max-width: 768px) {
+            .share-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .share-button {
+                width: 80%;
+                justify-content: center;
+            }
+        }
+    </style>
+
+    <!-- 카카오톡 공유 SDK -->
+    <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+</head>
+<body>
+    <!-- 기존 계산기 컨텐츠 -->
+    
+    <!-- 공유 버튼 추가 -->
+    <div class="share-buttons">
+        <a href="#" class="share-button kakao" onclick="shareKakao()">
+            카카오톡으로 공유하기
+        </a>
+        <a href="#" class="share-button facebook" onclick="shareFacebook()">
+            페이스북으로 공유하기
+        </a>
+        <a href="#" class="share-button twitter" onclick="shareTwitter()">
+            트위터로 공유하기
+        </a>
+    </div>
+
+    <!-- CTA 버튼 -->
+    <a href="http://puppy-intellect-playground.lovable.app/" class="cta-button">
+        우리집 강아지 천재견 만들기 프로젝트 바로가기 🐕
+    </a>
+
+    <!-- 공유 기능 스크립트 -->
+    <script>
+        // 카카오톡 초기화
+        Kakao.init('YOUR_KAKAO_APP_KEY');
+
+        function shareKakao() {
+            Kakao.Link.sendDefault({
+                objectType: 'feed',
+                content: {
+                    title: '강아지 나이 계산기',
+                    description: '우리 강아지의 실제 나이를 정확하게 계산해보세요!',
+                    imageUrl: 'https://example.com/images/dog-age-calculator-og.jpg',
+                    link: {
+                        mobileWebUrl: window.location.href,
+                        webUrl: window.location.href,
+                    },
+                },
+                buttons: [
+                    {
+                        title: '계산기 열기',
+                        link: {
+                            mobileWebUrl: window.location.href,
+                            webUrl: window.location.href,
+                        },
+                    },
+                ],
+            });
+        }
+
+        function shareFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, 
+                       'facebook-share-dialog', 
+                       'width=626,height=436');
+        }
+
+        function shareTwitter() {
+            const text = encodeURIComponent('강아지 나이 계산기로 우리 강아지의 실제 나이를 알아보세요!');
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`,
+                       'twitter-share-dialog',
+                       'width=626,height=436');
+        }
+    </script>
+</body>
+</html>
