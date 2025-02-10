@@ -402,42 +402,9 @@
             우리집 강아지 천재견 만들기 프로젝트 바로가기 🐕
         </a>
     </div>
-    <script>
-        // 품종 데이터
-        const dogBreeds = {
-            "그레이트 데인": { 
-                lifespan: "8-10", 
-                ageRate: 8.0, 
-                image: "https://blog.kakaocdn.net/dn/ptllI/btsLhM2tSKj/aeMMk6g8Wgi46nV6kgllIk/img.png", 
-                stats: { exercise: 7, grooming: 4, training: 6, health: 5, social: 7 }, 
-                characteristics: "거대하지만 온순한 성격의 대형견입니다.", 
-                healthNote: "고관절 이형성증과 심장병에 주의가 필요합니다.", 
-                walkingTip: "하루 2회, 각 30분의 가벼운 운동이 적당합니다.", 
-                blogUrl: "/great-dane-care" 
-            },
-            "그레이하운드": { 
-                lifespan: "10-13", 
-                ageRate: 7.3, 
-                image: "https://wrtn-image-user-output.s3.ap-northeast-2.amazonaws.com/648758005bfa0c92543455b6/79e3d1c6-fd25-4ab1-9088-cf983c63dc1c.png", 
-                stats: { exercise: 8, grooming: 3, training: 5, health: 7, social: 6 }, 
-                characteristics: "빠른 속도와 우아한 체형을 가진 견종입니다.", 
-                healthNote: "치아 관리와 운동 후 휴식이 중요합니다.", 
-                walkingTip: "하루 2회, 각 30-40분의 운동이 필요합니다.", 
-                blogUrl: "/greyhound-care" 
-            },
-            "골든 리트리버": { 
-                lifespan: "10-12", 
-                ageRate: 7.5, 
-                image: "https://blog.kakaocdn.net/dn/MIGgR/btsLgo9BEpx/4KhKzagp75umESsc8ftHbk/img.webp", 
-                stats: { exercise: 7, grooming: 7, training: 3, health: 6, social: 9 }, 
-                characteristics: "친근하고 지능적인 대표적인 가정견입니다.", 
-                healthNote: "고관절 이형성증과 피부병에 주의가 필요합니다.", 
-                walkingTip: "하루 2회, 각 30-40분의 운동이 필요합니다.", 
-                blogUrl: "/golden-retriever-care" 
-            },
-            // ... 나머지 견종 데이터 ...
-        };
-
+       <script type="module">
+        import dogBreeds from './data/breeds.js';
+        
         // 페이지 로드 시 품종 옵션 추가
         window.onload = function() {
             const breedSelect = document.getElementById('dogBreed');
@@ -454,7 +421,7 @@
             });
         };
 
-        function calculateAndShowResults() {
+        window.calculateAndShowResults = function() {
             const selectedBreed = document.getElementById('dogBreed').value;
             const dogAge = parseFloat(document.getElementById('dogAge').value);
             
@@ -500,9 +467,9 @@
             if (breedData.lifespan) {
                 createLifeExpectancyChart(breedData.lifespan);
             }
-        }
+        };
 
-        function createCharacteristicsChart(stats) {
+           function createCharacteristicsChart(stats) {
             const ctx = document.getElementById('characteristicsChart').getContext('2d');
             
             if (window.characteristicsChart instanceof Chart) {
@@ -617,175 +584,6 @@
                 }
             });
         }
-    </script>
-</body>
-</html>
-        
-
-
-
-
-
-
-        
-
-
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    !DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>강아지 나이 계산기 - 우리 강아지의 실제 나이 알아보기</title>
-    
-    <!-- SEO 메타태그 -->
-    <meta name="description" content="우리 강아지의 실제 나이를 정확하게 계산해보세요. 품종별 특성과 수명을 고려한 과학적인 나이 계산기입니다.">
-    <meta name="keywords" content="강아지 나이 계산기, 반려견 나이, 강아지 수명, 품종별 나이">
-    
-    <!-- Open Graph 태그 -->
-    <meta property="og:title" content="강아지 나이 계산기 - 우리 강아지의 실제 나이 알아보기">
-    <meta property="og:description" content="우리 강아지의 실제 나이를 정확하게 계산해보세요. 품종별 특성과 수명을 고려한 과학적인 나이 계산기입니다.">
-    <meta property="og:image" content="https://mypawstory.com/wp-content/uploads/2024/11/%EB%B0%98%EB%A0%A4%EA%B2%AC-asmr.jpg">
-    <meta property="og:url" content="https://example.com/dog-age-calculator">
-    <meta property="og:type" content="website">
-    
-    <!-- Twitter 카드 -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="강아지 나이 계산기">
-    <meta name="twitter:description" content="우리 강아지의 실제 나이를 정확하게 계산해보세요.">
-    <meta name="twitter:image" content="https://mypawstory.com/wp-content/uploads/2024/11/%EB%B0%98%EB%A0%A4%EA%B2%AC-asmr.jpg">
-    <!-- 기존 스타일시트 유지 -->
-    <style>
-        /* 기존 스타일 유지 */
-        
-        /* 새로운 스타일 추가 */
-        .cta-button {
-            display: block;
-            width: 100%;
-            max-width: 500px;
-            margin: 30px auto;
-            padding: 15px 20px;
-            background: linear-gradient(135deg, #6e8efb, #4a6ee0);
-            color: white;
-            text-align: center;
-            text-decoration: none;
-            border-radius: 10px;
-            font-size: 18px;
-            font-weight: bold;
-            transition: transform 0.2s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-        }
-
-        .share-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .share-button {
-            padding: 10px 20px;
-            border-radius: 5px;
-            color: white;
-            text-decoration: none;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .share-button.kakao {
-            background-color: #FEE500;
-            color: #000000;
-        }
-
-        .share-button.facebook {
-            background-color: #1877F2;
-        }
-
-        .share-button.twitter {
-            background-color: #1DA1F2;
-        }
-
-        @media (max-width: 768px) {
-            .share-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .share-button {
-                width: 80%;
-                justify-content: center;
-            }
-        }
-    </style>
-
-    <!-- 카카오톡 공유 SDK -->
-    <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
-</head>
-<body>
-    <!-- 기존 계산기 컨텐츠 -->
-    
-   
-<!-- 공유 버튼들 -->
-<div class="share-buttons">
-    <button onclick="shareKakao('https://coffeemania68.github.io/dog-age/')" class="share-button kakao">
-        카카오톡 공유
-    </button>
-    <button onclick="shareFacebook('https://coffeemania68.github.io/dog-age/')" class="share-button facebook">
-        페이스북 공유
-    </button>
-    <button onclick="shareTwitter('https://coffeemania68.github.io/dog-age/')" class="share-button twitter">
-        트위터 공유
-    </button>
-</div>
-
-    <!-- CTA 버튼 -->
-    <a href="http://puppy-intellect-playground.lovable.app/" class="cta-button">
-        우리집 강아지 천재견 만들기 프로젝트 바로가기 🐕
-    </a>
-
-   <script type="module">
-        import dogBreeds from './data/breeds.js';
-        
-        // 페이지 로드 시 품종 옵션 추가
-        window.onload = function() {
-            const breedSelect = document.getElementById('dogBreed');
-            
-            // 기본 옵션
-            breedSelect.innerHTML = '<option value="">품종을 선택하세요</option>';
-            
-            // dogBreeds 객체의 키(품종명)들을 옵션으로 추가
-            Object.keys(dogBreeds).sort().forEach(breed => {
-                const option = document.createElement('option');
-                option.value = breed;
-                option.textContent = breed;
-                breedSelect.appendChild(option);
-            });
-        };
-
-        // 결과 계산 및 표시 함수
-        window.calculateAndShowResults = function() {
-            // ... 기존 calculateAndShowResults 함수 내용 ...
-        };
     </script>
 </body>
 </html>
