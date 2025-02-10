@@ -1,0 +1,21 @@
+{
+  "name": "강아지 나이 계산기",
+  "short_name": "강아지 나이",
+  "description": "우리 강아지의 실제 나이를 정확하게 계산해보세요",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#FF90BC",
+  "icons": [
+    {
+      "src": "https://mypawstory.com/wp-content/uploads/2024/11/%EB%B0%98%EB%A0%A7%EA%B2%AC-asmr.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "https://mypawstory.com/wp-content/uploads/2024/11/%EB%B0%98%EB%A0%A7%EA%B2%AC-asmr.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}
