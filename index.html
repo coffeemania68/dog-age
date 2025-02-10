@@ -26,6 +26,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+    <!-- iOS용 웹 앱 설정 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="강아지 나이 계산기">
+    <link rel="apple-touch-icon" href="https://mypawstory.com/wp-content/uploads/2024/11/%EB%B0%98%EB%A0%A4%EA%B2%AC-asmr.jpg">
+
+    <!-- Android용 웹 앱 설정 -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="https://mypawstory.com/wp-content/uploads/2024/11/%EB%B0%98%EB%A0%A7%EA%B2%AC-asmr.jpg">
+
+    <!-- Windows 타일 아이콘 -->
+    <meta name="msapplication-TileImage" content="https://mypawstory.com/wp-content/uploads/2024/11/%EB%B0%98%EB%A0%A7%EA%B2%AC-asmr.jpg">
+    <meta name="msapplication-TileColor" content="#FF90BC">
+
     <!-- 카카오톡 공유 SDK -->
     <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
     
@@ -431,10 +446,7 @@
             <button onclick="shareFacebook()" class="share-button facebook">
                 페이스북 공유
             </button>
-            <button onclick="shareTwitter()" class="share-button twitter">
-                트위터 공유
-            </button>
-        </div>
+            </div>
 
         <!-- CTA 버튼 -->
         <a href="http://puppy-intellect-playground.lovable.app/" target="_blank" rel="noopener noreferrer" class="cta-button">
