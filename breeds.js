@@ -348,7 +348,8 @@ const dogBreeds = {
         characteristics: "친근하고 활발한 소형 테리어입니다.", 
         healthNote: "피부 질환과 알레르기에 주의가 필요합니다.", 
         walkingTip: "하루 2회, 각 20-30분 산책이 적당합니다." 
-    }
+    },
+};
 
 export default dogBreeds;
 
