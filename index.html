@@ -433,71 +433,72 @@
         </a>
     </div>
        <script type="module">
-        import dogBreeds from './data/breeds.js';
+        import dogBreeds from './breeds.js';
         
         // 페이지 로드 시 품종 옵션 추가
-        window.onload = function() {
-            const breedSelect = document.getElementById('dogBreed');
-            
-            // 기본 옵션
-            breedSelect.innerHTML = '<option value="">품종을 선택하세요</option>';
-            
-            // dogBreeds 객체의 키(품종명)들을 옵션으로 추가
-            Object.keys(dogBreeds).sort().forEach(breed => {
-                const option = document.createElement('option');
-                option.value = breed;
-                option.textContent = breed;
-                breedSelect.appendChild(option);
-            });
-        };
+    document.addEventListener('DOMContentLoaded', function() {
+        const breedSelect = document.getElementById('dogBreed');
+        
+        // 기본 옵션
+        breedSelect.innerHTML = '<option value="">품종을 선택하세요</option>';
+        
+        // dogBreeds 객체의 키(품종명)들을 옵션으로 추가
+        Object.keys(dogBreeds).sort().forEach(breed => {
+            const option = document.createElement('option');
+            option.value = breed;
+            option.textContent = breed;
+            breedSelect.appendChild(option);
+        });
+    });
 
-        window.calculateAndShowResults = function() {
-            const selectedBreed = document.getElementById('dogBreed').value;
-            const dogAge = parseFloat(document.getElementById('dogAge').value);
-            
-            if (!selectedBreed) {
-                alert('품종을 선택해주세요.');
-                return;
-            }
-            if (isNaN(dogAge) || dogAge < 0.5 || dogAge > 20) {
-                alert('나이는 0.5~20 사이의 숫자를 입력해주세요.');
-                return;
-            }
+    // calculateAndShowResults 함수를 전역으로 사용할 수 있도록 window 객체에 할당
+    window.calculateAndShowResults = function() {
+        const selectedBreed = document.getElementById('dogBreed').value;
+        const dogAge = parseFloat(document.getElementById('dogAge').value);
+        
+        if (!selectedBreed) {
+            alert('품종을 선택해주세요.');
+            return;
+        }
+        if (isNaN(dogAge) || dogAge < 0.5 || dogAge > 20) {
+            alert('나이는 0.5~20 사이의 숫자를 입력해주세요.');
+            return;
+        }
 
-            const breedData = dogBreeds[selectedBreed];
-            const humanAge = Math.round(dogAge * breedData.ageRate);
-            
-            const resultContainer = document.getElementById('resultContainer');
-            resultContainer.style.display = 'block';
+        const breedData = dogBreeds[selectedBreed];
+        const humanAge = Math.round(dogAge * breedData.ageRate);
+        
+        const resultContainer = document.getElementById('resultContainer');
+        resultContainer.style.display = 'block';
 
-            document.getElementById('breedImage').src = breedData.image;
-            document.querySelector('.breed-title').textContent = selectedBreed;
-            document.querySelector('.dog-age').textContent = `강아지 나이: ${dogAge}살`;
-            document.querySelector('.human-age').textContent = `사람 나이: 약 ${humanAge}살`;
-            
-            document.querySelector('.basic-info').innerHTML = `
-                <strong>기본 정보:</strong><br>
-                평균 수명: ${breedData.lifespan}년<br>
-                ${breedData.characteristics}
-            `;
-            
-            document.querySelector('.walking-guide').innerHTML = `
-                <strong>산책 가이드:</strong><br>
-                ${breedData.walkingTip}
-            `;
-            
-            document.querySelector('.health-info').innerHTML = `
-                <strong>건강 관리:</strong><br>
-                ${breedData.healthNote}
-            `;
+        document.getElementById('breedImage').src = breedData.image;
+        document.querySelector('.breed-title').textContent = selectedBreed;
+        document.querySelector('.dog-age').textContent = `강아지 나이: ${dogAge}살`;
+        document.querySelector('.human-age').textContent = `사람 나이: 약 ${humanAge}살`;
+        
+        document.querySelector('.basic-info').innerHTML = `
+            <strong>기본 정보:</strong><br>
+            평균 수명: ${breedData.lifespan}년<br>
+            ${breedData.characteristics}
+        `;
+        
+        document.querySelector('.walking-guide').innerHTML = `
+            <strong>산책 가이드:</strong><br>
+            ${breedData.walkingTip}
+        `;
+        
+        document.querySelector('.health-info').innerHTML = `
+            <strong>건강 관리:</strong><br>
+            ${breedData.healthNote}
+        `;
 
-            if (breedData.stats) {
-                createCharacteristicsChart(breedData.stats);
-            }
-            if (breedData.lifespan) {
-                createLifeExpectancyChart(breedData.lifespan);
-            }
-        };
+        if (breedData.stats) {
+            createCharacteristicsChart(breedData.stats);
+        }
+        if (breedData.lifespan) {
+            createLifeExpectancyChart(breedData.lifespan);
+        }
+    };
 
            function createCharacteristicsChart(stats) {
             const ctx = document.getElementById('characteristicsChart').getContext('2d');
