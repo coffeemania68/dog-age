@@ -12,7 +12,7 @@
     <!-- Open Graph 태그 -->
     <meta property="og:title" content="강아지 나이 계산기 - 우리 강아지의 실제 나이 알아보기">
     <meta property="og:description" content="우리 강아지의 실제 나이를 정확하게 계산해보세요. 품종별 특성과 수명을 고려한 과학적인 나이 계산기입니다.">
-    <meta property="og:image" content="https://example.com/images/dog-age-calculator-og.jpg">
+    <meta property="og:image" content="https://mypawstory.com/wp-content/uploads/2024/11/%EB%B0%98%EB%A0%A4%EA%B2%AC-asmr.jpg">
     <meta property="og:url" content="https://example.com/dog-age-calculator">
     <meta property="og:type" content="website">
     
@@ -20,8 +20,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="강아지 나이 계산기">
     <meta name="twitter:description" content="우리 강아지의 실제 나이를 정확하게 계산해보세요.">
-    <meta name="twitter:image" content="https://example.com/images/dog-age-calculator-og.jpg">
-
+    <meta name="twitter:image" content="https://mypawstory.com/wp-content/uploads/2024/11/%EB%B0%98%EB%A0%A4%EA%B2%AC-asmr.jpg">
     <!-- 기존 스타일시트 유지 -->
     <style>
         /* 기존 스타일 유지 */
@@ -99,67 +98,48 @@
 <body>
     <!-- 기존 계산기 컨텐츠 -->
     
-    <!-- 공유 버튼 추가 -->
-    <div class="share-buttons">
-        <a href="#" class="share-button kakao" onclick="shareKakao()">
-            카카오톡으로 공유하기
-        </a>
-        <a href="#" class="share-button facebook" onclick="shareFacebook()">
-            페이스북으로 공유하기
-        </a>
-        <a href="#" class="share-button twitter" onclick="shareTwitter()">
-            트위터로 공유하기
-        </a>
-    </div>
+   
+<!-- 공유 버튼들 -->
+<div class="share-buttons">
+    <button onclick="shareKakao('https://coffeemania68.github.io/dog-age/')" class="share-button kakao">
+        카카오톡 공유
+    </button>
+    <button onclick="shareFacebook('https://coffeemania68.github.io/dog-age/')" class="share-button facebook">
+        페이스북 공유
+    </button>
+    <button onclick="shareTwitter('https://coffeemania68.github.io/dog-age/')" class="share-button twitter">
+        트위터 공유
+    </button>
+</div>
 
     <!-- CTA 버튼 -->
     <a href="http://puppy-intellect-playground.lovable.app/" class="cta-button">
         우리집 강아지 천재견 만들기 프로젝트 바로가기 🐕
     </a>
 
-    <!-- 공유 기능 스크립트 -->
-    <script>
-        // 카카오톡 초기화
-        Kakao.init('YOUR_KAKAO_APP_KEY');
-
-        function shareKakao() {
-            Kakao.Link.sendDefault({
-                objectType: 'feed',
-                content: {
-                    title: '강아지 나이 계산기',
-                    description: '우리 강아지의 실제 나이를 정확하게 계산해보세요!',
-                    imageUrl: 'https://example.com/images/dog-age-calculator-og.jpg',
-                    link: {
-                        mobileWebUrl: window.location.href,
-                        webUrl: window.location.href,
-                    },
-                },
-                buttons: [
-                    {
-                        title: '계산기 열기',
-                        link: {
-                            mobileWebUrl: window.location.href,
-                            webUrl: window.location.href,
-                        },
-                    },
-                ],
+   <script type="module">
+        import dogBreeds from './data/breeds.js';
+        
+        // 페이지 로드 시 품종 옵션 추가
+        window.onload = function() {
+            const breedSelect = document.getElementById('dogBreed');
+            
+            // 기본 옵션
+            breedSelect.innerHTML = '<option value="">품종을 선택하세요</option>';
+            
+            // dogBreeds 객체의 키(품종명)들을 옵션으로 추가
+            Object.keys(dogBreeds).sort().forEach(breed => {
+                const option = document.createElement('option');
+                option.value = breed;
+                option.textContent = breed;
+                breedSelect.appendChild(option);
             });
-        }
+        };
 
-        function shareFacebook() {
-            const url = encodeURIComponent(window.location.href);
-            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, 
-                       'facebook-share-dialog', 
-                       'width=626,height=436');
-        }
-
-        function shareTwitter() {
-            const text = encodeURIComponent('강아지 나이 계산기로 우리 강아지의 실제 나이를 알아보세요!');
-            const url = encodeURIComponent(window.location.href);
-            window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`,
-                       'twitter-share-dialog',
-                       'width=626,height=436');
-        }
+        // 결과 계산 및 표시 함수
+        window.calculateAndShowResults = function() {
+            // ... 기존 calculateAndShowResults 함수 내용 ...
+        };
     </script>
 </body>
 </html>
