@@ -102,13 +102,10 @@
     }
 
     .dog-age-calculator {
-        max-width: 1000px;
-        margin: 40px auto;
-        padding: 30px;
-        background: rgba(255, 255, 255, 0.9);
-        border-radius: 20px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-    }
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 20px;
+}
 
     .calculator-title {
         font-size: 32px;
@@ -179,13 +176,12 @@
     }
 
     .result-container {
-        display: none;
-        background: #fff;
-        border-radius: 20px;
-        padding: 30px;
-        margin-top: 30px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    }
+    display: none;
+    margin-top: 30px;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+}
 
     .main-info-card {
         display: flex;
@@ -237,26 +233,28 @@
     }
 
     .charts-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 25px;
-        margin-top: 30px;
-    }
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    margin-top: 30px;
+}
 
-    .chart-wrapper {
-        background: #fff;
-        padding: 25px;
-        border-radius: 16px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-    }
+    /* 차트 래퍼 수정 */
+.chart-wrapper {
+    background: rgba(255, 144, 188, 0.05);  /* 연한 핑크 배경 */
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    height: auto;  /* 높이 자동 조정 */
+    min-height: 300px;  /* 최소 높이 설정 */
+}
 
-    .chart-wrapper h3 {
-        font-size: 20px;
-        font-weight: 600;
-        margin-bottom: 20px;
-        text-align: center;
-        color: var(--neutral-dark);
-    }
+/* 수명 비교 차트 래퍼 특별 처리 */
+.chart-wrapper:last-child {
+    height: auto;
+    min-height: 300px;
+    max-height: 300px;  /* 최대 높이 제한 */
+}
 
     .share-buttons {
         display: flex;
@@ -317,15 +315,19 @@
         box-shadow: 0 8px 25px rgba(123, 102, 255, 0.3);
     }
 
-    @media screen and (max-width: 768px) {
-        .dog-age-calculator {
-            margin: 20px;
-            padding: 20px;
-        }
+  @media screen and (max-width: 768px) {
+    .dog-age-calculator {
+        margin: 10px;
+        padding: 10px;
+    }
 
         .calculator-title {
             font-size: 24px;
         }
+
+      .charts-container {
+        grid-template-columns: 1fr;  /* 모바일에서는 한 열로 */
+    }
 
         .main-info-card {
             flex-direction: column;
@@ -358,8 +360,16 @@
         .share-button {
             flex: 1;
             min-width: 140px;
-        }
+
+        .chart-wrapper {
+        min-height: 250px;
     }
+
+    .chart-wrapper:last-child {
+        min-height: 250px;
+        max-height: 250px;
+    }
+}
 </style>
 </head>
 
@@ -431,17 +441,14 @@
             우리집 강아지 천재견 만들기 프로젝트 바로가기 🐕
         </a>
     </div>
-       <script type="module">
-        import dogBreeds from './breeds.js';
-        
-        // 페이지 로드 시 품종 옵션 추가
+    <script type="module">
+    import dogBreeds from './breeds.js';
+    
+    // 페이지 로드 시 품종 옵션 추가
     document.addEventListener('DOMContentLoaded', function() {
         const breedSelect = document.getElementById('dogBreed');
-        
-        // 기본 옵션
         breedSelect.innerHTML = '<option value="">품종을 선택하세요</option>';
         
-        // dogBreeds 객체의 키(품종명)들을 옵션으로 추가
         Object.keys(dogBreeds).sort().forEach(breed => {
             const option = document.createElement('option');
             option.value = breed;
@@ -450,7 +457,6 @@
         });
     });
 
-    // calculateAndShowResults 함수를 전역으로 사용할 수 있도록 window 객체에 할당
     window.calculateAndShowResults = function() {
         const selectedBreed = document.getElementById('dogBreed').value;
         const dogAge = parseFloat(document.getElementById('dogAge').value);
@@ -499,121 +505,121 @@
         }
     };
 
-           function createCharacteristicsChart(stats) {
-            const ctx = document.getElementById('characteristicsChart').getContext('2d');
-            
-            if (window.characteristicsChart instanceof Chart) {
-                window.characteristicsChart.destroy();
-            }
-            
-            window.characteristicsChart = new Chart(ctx, {
-                type: 'radar',
-                data: {
-                    labels: ['운동량', '그루밍', '훈련난이도', '건강관리', '사회성'],
-                    datasets: [{
-                        label: '특성 점수 (1-10)',
-                        data: [
-                            stats.exercise,
-                            stats.grooming,
-                            stats.training,
-                            stats.health,
-                            stats.social
-                        ],
-                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        pointBackgroundColor: 'rgba(54, 162, 235, 1)',
-                        pointBorderColor: '#fff',
-                        pointHoverBackgroundColor: '#fff',
-                        pointHoverBorderColor: 'rgba(54, 162, 235, 1)'
-                    }]
-                },
-                options: {
-                    scales: {
-                        r: {
-                            beginAtZero: true,
-                            max: 10,
-                            ticks: {
-                                stepSize: 2
-                            }
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            display: false
+    function createCharacteristicsChart(stats) {
+        const ctx = document.getElementById('characteristicsChart').getContext('2d');
+        
+        if (window.characteristicsChart instanceof Chart) {
+            window.characteristicsChart.destroy();
+        }
+        
+        window.characteristicsChart = new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: ['운동량', '그루밍', '훈련난이도', '건강관리', '사회성'],
+                datasets: [{
+                    label: '특성 점수 (1-10)',
+                    data: [
+                        stats.exercise,
+                        stats.grooming,
+                        stats.training,
+                        stats.health,
+                        stats.social
+                    ],
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    pointBackgroundColor: 'rgba(54, 162, 235, 1)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgba(54, 162, 235, 1)'
+                }]
+            },
+            options: {
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 10,
+                        ticks: {
+                            stepSize: 2
                         }
                     }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
                 }
-            });
-        }
+            }
+        });
+    }
 
-        function createLifeExpectancyChart(lifespan) {
-            const ctx = document.getElementById('lifeExpectancyChart').getContext('2d');
-            
-            if (window.lifeExpectancyChart instanceof Chart) {
-                window.lifeExpectancyChart.destroy();
-            }
-            
-            const [minLife, maxLife] = lifespan.split('-').map(Number);
-            
-            window.lifeExpectancyChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['평균 수명'],
-                    datasets: [{
-                        label: '최소',
-                        data: [minLife],
-                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        borderWidth: 1
-                    },
-                    {
-                        label: '최대',
-                        data: [maxLife],
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1
-                    }]
+    function createLifeExpectancyChart(lifespan) {
+        const ctx = document.getElementById('lifeExpectancyChart').getContext('2d');
+        
+        if (window.lifeExpectancyChart instanceof Chart) {
+            window.lifeExpectancyChart.destroy();
+        }
+        
+        const [minLife, maxLife] = lifespan.split('-').map(Number);
+        
+        window.lifeExpectancyChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['평균 수명'],
+                datasets: [{
+                    label: '최소',
+                    data: [minLife],
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: 20,
-                            ticks: {
-                                font: {
-                                    size: 14
-                                }
-                            }
-                        },
-                        x: {
-                            ticks: {
-                                font: {
-                                    size: 14
-                                }
+                {
+                    label: '최대',
+                    data: [maxLife],
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 20,
+                        ticks: {
+                            font: {
+                                size: 14
                             }
                         }
                     },
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: '예상 수명 범위 (년)',
+                    x: {
+                        ticks: {
                             font: {
-                                size: 16
+                                size: 14
                             }
-                        },
-                        legend: {
-                            labels: {
-                                font: {
-                                    size: 14
-                                }
+                        }
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: '예상 수명 범위 (년)',
+                        font: {
+                            size: 16
+                        }
+                    },
+                    legend: {
+                        labels: {
+                            font: {
+                                size: 14
                             }
                         }
                     }
                 }
-            });
-        }
-    </script>
-</body>
+            }
+        });
+    }
+</script>  
+    </body>
 </html>
