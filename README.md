@@ -3,6 +3,9 @@
 강아지 나이를 견종 크기에 맞춰 사람 나이로 바꿔 주는 정적 사이트. GitHub Pages: https://coffeemania68.github.io/dog-age/
 
 ## 고치는 법
+상품 이름·쿠팡 링크는 스레드 자동발행 앱(localhost:8787)의 **🎁 내 사이트 상품** 화면에서 쿠팡 검색으로 바로 넣는 게 제일 쉽다.
+`data/` 파일이 바뀌면 `.github/workflows/build.yml`이 빌드까지 해서 올린다 (2~3분). GitHub 웹에서 직접 고쳐도 똑같다.
+
 1. 견종: `data/breeds.json` (이름, 주소용 slug, 크기 small/medium/large/giant, 수명, 사진, 특성 점수, 설명)
 2. 나이대별 용품: `data/products.json` (puppy / young / adult / senior)
    - `link`에 쿠팡 파트너스 링크를 넣는다. **비어 있으면 쿠팡 검색으로 연결되고 수수료가 붙지 않는다.**

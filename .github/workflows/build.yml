@@ -1,0 +1,33 @@
+# 상품 목록(data/)이나 빌드 스크립트가 바뀌면 사이트 페이지를 다시 만들어 올린다.
+# 그래서 스레드 앱 '내 사이트 상품' 화면이나 GitHub 웹에서 data 파일만 고쳐도 사이트에 반영된다.
+name: 사이트 다시 만들기
+on:
+  push:
+    branches: [main]
+    paths: ['data/**', 'scripts/**', 'assets/*.js']
+  workflow_dispatch:
+permissions:
+  contents: write
+  pages: write
+concurrency: build
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node scripts/build.js
+      - name: 바뀐 페이지 올리기
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git add -A
+          if git diff --cached --quiet; then echo "바뀐 페이지 없음"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "사이트 다시 만들기 (상품 목록 반영)"
+          git push
+          # 봇이 올린 커밋은 Pages 배포가 안 걸릴 수 있어서 직접 요청한다
+          gh api -X POST "repos/${{ github.repository }}/pages/builds" || true
