@@ -1,637 +1,79 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>강아지 나이 계산기</title>
-
-    <!-- SEO 메타태그 -->
-    <meta name="description" content="우리 강아지의 실제 나이를 정확하게 계산해보세요. 40여 가지 품종별 특성과 수명을 고려한 과학적인 나이 계산기입니다.">
-    <meta name="keywords" content="강아지 나이 계산기, 반려견 나이, 강아지 수명, 품종별 나이">
-
-    <!-- Open Graph 태그 -->
-    <meta property="og:title" content="강아지 나이 계산기 - 우리 강아지의 실제 나이 알아보기">
-    <meta property="og:description" content="우리 강아지의 실제 나이를 정확하게 계산해보세요. 40여 가지 품종별 특성과 수명을 고려한 과학적인 나이 계산기입니다.">
-    <meta property="og:image" content="https://mypawstory.com/wp-content/uploads/2024/11/%EB%B0%98%EB%A0%A4%EA%B2%AC-asmr.jpg">
-    <meta property="og:url" content="https://coffeemania68.github.io/dog-age/">
-    <meta property="og:type" content="website">
-
-    <!-- Twitter 카드 -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="강아지 나이 계산기">
-    <meta name="twitter:description" content="우리 강아지의 실제 나이를 정확하게 계산해보세요. 40여 가지 품종별 특성과 수명을 고려한 과학적인 나이 계산기입니다.">
-    <meta name="twitter:image" content="https://mypawstory.com/wp-content/uploads/2024/11/%EB%B0%98%EB%A0%A4%EA%B2%AC-asmr.jpg">
-
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <!-- iOS용 웹 앱 설정 -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="강아지 나이 계산기">
-    <link rel="apple-touch-icon" href="https://mypawstory.com/wp-content/uploads/2024/11/%EB%B0%98%EB%A0%A4%EA%B2%AC-asmr.jpg">
-
-    <!-- Android용 웹 앱 설정 -->
-    <link rel="manifest" href="manifest.json">
-    <meta name="mobile-web-app-capable" content="yes">
-    <link rel="icon" sizes="192x192" href="https://mypawstory.com/wp-content/uploads/2024/11/%EB%B0%98%EB%A0%A7%EA%B2%AC-asmr.jpg">
-
-    <!-- Windows 타일 아이콘 -->
-    <meta name="msapplication-TileImage" content="https://mypawstory.com/wp-content/uploads/2024/11/%EB%B0%98%EB%A0%A7%EA%B2%AC-asmr.jpg">
-    <meta name="msapplication-TileColor" content="#FF90BC">
-
-    <!-- 카카오톡 공유 SDK -->
-    <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
-    
-    <!-- 카카오톡 초기화 및 공유 함수 -->
-    <script>
-        const kakaoApiKey = '110d468a677132abc8ddfe71b00c3939';
-        Kakao.init(kakaoApiKey);
-        
-        function shareKakao() {
-            Kakao.Link.sendDefault({
-                objectType: 'feed',
-                content: {
-                    title: '강아지 나이 계산기',
-                    description: '우리 강아지의 실제 나이를 정확하게 계산해보세요! 40여 가지 품종별 특성과 수명을 고려한 과학적인 나이 계산기입니다.',
-                    imageUrl: 'https://mypawstory.com/wp-content/uploads/2024/11/%EB%B0%98%EB%A0%A4%EA%B2%AC-asmr.jpg',
-                    link: {
-                        mobileWebUrl: 'https://coffeemania68.github.io/dog-age/',
-                        webUrl: 'https://coffeemania68.github.io/dog-age/'
-                    }
-                },
-                buttons: [
-                    {
-                        title: '나이 계산하기',
-                        link: {
-                            mobileWebUrl: 'https://coffeemania68.github.io/dog-age/',
-                            webUrl: 'https://coffeemania68.github.io/dog-age/'
-                        }
-                    }
-                ]
-            });
-        }
-
-        function shareFacebook() {
-            const url = encodeURIComponent('https://coffeemania68.github.io/dog-age/');
-            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, 
-                       'facebook-share-dialog', 
-                       'width=626,height=436');
-        }
-
-        function shareTwitter() {
-            const text = encodeURIComponent('우리 강아지의 실제 나이를 정확하게 계산해보세요!');
-            const url = encodeURIComponent('https://coffeemania68.github.io/dog-age/');
-            window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`,
-                       'twitter-share-dialog',
-                       'width=626,height=436');
-        }
-    </script>
-    
-      <style>
-    * {
-        -webkit-text-size-adjust: none;
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-    }
-
-    :root {
-        --primary-color: #FF90BC;  /* Peach Pink */
-        --secondary-color: #FFC0D9; /* Soft Pink */
-        --accent-color: #7B66FF;   /* Digital Lavender */
-        --neutral-dark: #2C3333;   /* Charcoal */
-        --neutral-light: #F5F5F5;  /* Snow White */
-        --success-color: #86A789;  /* Sage Green */
-    }
-
-    body {
-        font-family: 'Noto Sans KR', sans-serif;
-        line-height: 1.6;
-        word-break: keep-all;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        background: linear-gradient(135deg, var(--neutral-light), #fff);
-        color: var(--neutral-dark);
-    }
-
-    .dog-age-calculator {
-    max-width: 100%;
-    margin: 20px auto;
-    padding: 20px;
-}
-
-    .calculator-title {
-        font-size: 32px;
-        text-align: center;
-        margin-bottom: 40px;
-        color: var(--neutral-dark);
-        font-weight: 700;
-        background: linear-gradient(120deg, var(--primary-color), var(--accent-color));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-
-    .calculator-form {
-        max-width: 600px;
-        margin: 0 auto 40px;
-        background: #fff;
-        padding: 30px;
-        border-radius: 16px;
-        box-shadow: 0 4px 20px rgba(123, 102, 255, 0.1);
-    }
-
-    .input-group {
-        margin-bottom: 25px;
-    }
-
-    .input-group label {
-        display: block;
-        margin-bottom: 10px;
-        color: var(--neutral-dark);
-        font-size: 16px;
-        font-weight: 500;
-    }
-
-    .input-group select,
-    .input-group input {
-        width: 100%;
-        padding: 15px;
-        border: 2px solid rgba(123, 102, 255, 0.2);
-        border-radius: 12px;
-        font-size: 16px;
-        transition: all 0.3s ease;
-        background: #fff;
-    }
-
-    .input-group select:focus,
-    .input-group input:focus {
-        outline: none;
-        border-color: var(--accent-color);
-        box-shadow: 0 0 0 4px rgba(123, 102, 255, 0.1);
-    }
-
-    .calculate-btn {
-        width: 100%;
-        padding: 15px;
-        background: linear-gradient(135deg, var(--accent-color), #9681FF);
-        color: white;
-        border: none;
-        border-radius: 12px;
-        font-size: 18px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .calculate-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(123, 102, 255, 0.3);
-    }
-
-    .result-container {
-    display: none;
-    margin-top: 30px;
-    padding: 0;
-    background: transparent;
-    box-shadow: none;
-}
-
-    .main-info-card {
-        display: flex;
-        align-items: center;
-        gap: 30px;
-        background: linear-gradient(135deg, rgba(255, 144, 188, 0.1), rgba(123, 102, 255, 0.1));
-        border-radius: 20px;
-        padding: 30px;
-        margin-bottom: 30px;
-    }
-
-    .breed-image {
-        width: 250px;
-        height: 250px;
-        border-radius: 20px;
-        overflow: hidden;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    }
-
-    .breed-image img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.3s ease;
-    }
-
-    .breed-image img:hover {
-        transform: scale(1.05);
-    }
-
-    .breed-title {
-        font-size: 28px;
-        font-weight: 700;
-        margin-bottom: 20px;
-        color: var(--neutral-dark);
-    }
-
-    .age-comparison {
-        font-size: 20px;
-        line-height: 1.8;
-    }
-
-    .breed-details {
-        background: linear-gradient(135deg, #fff, var(--neutral-light));
-        border-radius: 16px;
-        padding: 25px;
-        margin: 20px 0;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-    }
-
-    .charts-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 25px;
-    margin-top: 30px;
-}
-
-    /* 차트 래퍼 수정 */
-.chart-wrapper {
-    background: rgba(255, 144, 188, 0.05);  /* 연한 핑크 배경 */
-    padding: 25px;
-    border-radius: 16px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-    height: auto;  /* 높이 자동 조정 */
-    min-height: 300px;  /* 최소 높이 설정 */
-}
-
-/* 수명 비교 차트 래퍼 특별 처리 */
-.chart-wrapper:last-child {
-    height: auto;
-    min-height: 300px;
-    max-height: 300px;  /* 최대 높이 제한 */
-}
-
-    .share-buttons {
-        display: flex;
-        gap: 15px;
-        justify-content: center;
-        margin: 30px 0;
-    }
-
-    .share-button {
-        padding: 12px 25px;
-        border: none;
-        border-radius: 12px;
-        cursor: pointer;
-        font-weight: 600;
-        font-size: 16px;
-        transition: all 0.3s ease;
-    }
-
-    .share-button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    }
-
-    .kakao {
-        background-color: #FEE500;
-        color: #000000;
-    }
-
-    .facebook {
-        background-color: #1877F2;
-        color: white;
-    }
-
-    .twitter {
-        background-color: #1DA1F2;
-        color: white;
-    }
-
-    .cta-button {
-        display: block;
-        width: 100%;
-        max-width: 600px;
-        margin: 40px auto;
-        padding: 20px;
-        background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-        color: white;
-        text-align: center;
-        text-decoration: none;
-        border-radius: 16px;
-        font-size: 20px;
-        font-weight: 700;
-        transition: all 0.3s ease;
-        box-shadow: 0 5px 20px rgba(123, 102, 255, 0.2);
-    }
-
-    .cta-button:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 25px rgba(123, 102, 255, 0.3);
-    }
-
-  @media screen and (max-width: 768px) {
-    .dog-age-calculator {
-        margin: 10px;
-        padding: 10px;
-    }
-
-        .calculator-title {
-            font-size: 24px;
-        }
-
-      .charts-container {
-        grid-template-columns: 1fr;  /* 모바일에서는 한 열로 */
-    }
-
-        .main-info-card {
-            flex-direction: column;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .breed-image {
-            width: 200px;
-            height: 200px;
-            margin: 0 auto;
-        }
-
-        .breed-title {
-            font-size: 24px;
-        }
-
-        .age-comparison {
-            font-size: 18px;
-        }
-
-        .chart-wrapper {
-            min-width: 100%;
-        }
-
-        .share-buttons {
-            flex-wrap: wrap;
-        }
-
-        .share-button {
-            flex: 1;
-            min-width: 140px;
-
-        .chart-wrapper {
-        min-height: 250px;
-    }
-
-    .chart-wrapper:last-child {
-        min-height: 250px;
-        max-height: 250px;
-    }
-}
-</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>강아지 나이 계산기 | 사람 나이로 몇 살? 견종별 정확한 환산</title>
+<meta name="description" content="강아지 나이를 사람 나이로 바로 계산하세요. 말티즈, 푸들, 포메라니안 등 35개 견종과 믹스견까지. 1살 15세·2살 24세, 크기별 노화 속도와 평균 수명, 시기별 관리법을 알려 드립니다.">
+<link rel="canonical" href="https://coffeemania68.github.io/dog-age/">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="강아지 나이 계산기">
+<meta property="og:title" content="강아지 나이 계산기 | 사람 나이로 몇 살? 견종별 정확한 환산">
+<meta property="og:description" content="강아지 나이를 사람 나이로 바로 계산하세요. 말티즈, 푸들, 포메라니안 등 35개 견종과 믹스견까지. 1살 15세·2살 24세, 크기별 노화 속도와 평균 수명, 시기별 관리법을 알려 드립니다.">
+<meta property="og:url" content="https://coffeemania68.github.io/dog-age/">
+<meta property="og:image" content="https://coffeemania68.github.io/dog-age/images/og.png">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#fbf7f1">
+<link rel="icon" href="images/icon-192.png">
+<link rel="apple-touch-icon" href="images/icon-192.png">
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="assets/style.css?v=2026-10-29">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"강아지 나이 계산기","url":"https://coffeemania68.github.io/dog-age/","applicationCategory":"LifestyleApplication","operatingSystem":"Web","inLanguage":"ko","offers":{"@type":"Offer","price":"0","priceCurrency":"KRW"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"강아지 나이는 사람 나이로 어떻게 계산하나요?","acceptedAnswer":{"@type":"Answer","text":"1살은 약 15세, 2살은 약 24세이고, 그 뒤로는 크기에 따라 1년에 4~7세씩 더합니다. 소형견 10살은 약 56세, 대형견 10살은 약 72세예요."}},{"@type":"Question","name":"믹스견은 어떻게 계산하나요?","acceptedAnswer":{"@type":"Answer","text":"품종 대신 몸무게로 크기를 고르면 됩니다. 10kg 이하는 소형견, 10~25kg은 중형견, 25~45kg은 대형견이에요."}},{"@type":"Question","name":"계산 결과가 정확한가요?","acceptedAnswer":{"@type":"Answer","text":"평균적인 근사치입니다. 같은 나이라도 건강 상태와 생활 습관에 따라 차이가 커요."}}]}</script>
 </head>
-
-    <body>
-    <div class="dog-age-calculator">
-        <h1 class="calculator-title">강아지 나이 계산기</h1>
-        
-        <div class="calculator-form">
-            <div class="input-group">
-                <label for="dogBreed">강아지 품종</label>
-                <select id="dogBreed" required>
-                    <option value="">품종을 선택하세요</option>
-                </select>
-            </div>
-            <div class="input-group">
-                <label for="dogAge">강아지 나이 (년)</label>
-                <input type="number" id="dogAge" min="0.5" max="20" step="0.5" required>
-            </div>
-            <button class="calculate-btn" onclick="calculateAndShowResults()">계산하기</button>
-        </div>
-
-        <div id="resultContainer" class="result-container">
-            <div class="main-info-card">
-                <div class="breed-image">
-                    <img id="breedImage" src="" alt="강아지 품종 이미지">
-                </div>
-                <div class="age-info">
-                    <h2 class="breed-title"></h2>
-                    <div class="age-comparison">
-                        <p class="dog-age"></p>
-                        <p class="human-age"></p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="breed-details">
-                <p class="basic-info"></p>
-                <p class="walking-guide"></p>
-                <p class="health-info"></p>
-            </div>
-
-            <div class="charts-container">
-                <div class="chart-wrapper">
-                    <h3>강아지 특성</h3>
-                    <canvas id="characteristicsChart"></canvas>
-                </div>
-                <div class="chart-wrapper">
-                    <h3>수명 비교</h3>
-                    <canvas id="lifeExpectancyChart"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <!-- 공유 버튼들 -->
-        <div class="share-buttons">
-            <button onclick="shareKakao()" class="share-button kakao">
-                카카오톡 공유
-            </button>
-            <button onclick="shareFacebook()" class="share-button facebook">
-                페이스북 공유
-            </button>
-            </div>
-
-        <!-- CTA 버튼 -->
-        <a href="http://puppy-intellect-playground.lovable.app/" target="_blank" rel="noopener noreferrer" class="cta-button">
-            우리집 강아지 천재견 만들기 프로젝트 바로가기 🐕
-        </a>
-    </div>
-    <script type="module">
-    import dogBreeds from './breeds.js';
-    
-    // 페이지 로드 시 품종 옵션 추가
-    document.addEventListener('DOMContentLoaded', function() {
-        const breedSelect = document.getElementById('dogBreed');
-        breedSelect.innerHTML = '<option value="">품종을 선택하세요</option>';
-        
-        Object.keys(dogBreeds).sort().forEach(breed => {
-            const option = document.createElement('option');
-            option.value = breed;
-            option.textContent = breed;
-            breedSelect.appendChild(option);
-        });
-    });
-
-    window.calculateAndShowResults = function() {
-        const selectedBreed = document.getElementById('dogBreed').value;
-        const dogAge = parseFloat(document.getElementById('dogAge').value);
-        
-        if (!selectedBreed) {
-            alert('품종을 선택해주세요.');
-            return;
-        }
-        if (isNaN(dogAge) || dogAge < 0.5 || dogAge > 20) {
-            alert('나이는 0.5~20 사이의 숫자를 입력해주세요.');
-            return;
-        }
-
-        const breedData = dogBreeds[selectedBreed];
-        const humanAge = Math.round(dogAge * breedData.ageRate);
-        
-        const resultContainer = document.getElementById('resultContainer');
-        resultContainer.style.display = 'block';
-
-        document.getElementById('breedImage').src = breedData.image;
-        document.querySelector('.breed-title').textContent = selectedBreed;
-        document.querySelector('.dog-age').textContent = `강아지 나이: ${dogAge}살`;
-        document.querySelector('.human-age').textContent = `사람 나이: 약 ${humanAge}살`;
-        
-        document.querySelector('.basic-info').innerHTML = `
-            <strong>기본 정보:</strong><br>
-            평균 수명: ${breedData.lifespan}년<br>
-            ${breedData.characteristics}
-        `;
-        
-        document.querySelector('.walking-guide').innerHTML = `
-            <strong>산책 가이드:</strong><br>
-            ${breedData.walkingTip}
-        `;
-        
-        document.querySelector('.health-info').innerHTML = `
-            <strong>건강 관리:</strong><br>
-            ${breedData.healthNote}
-        `;
-
-        if (breedData.stats) {
-            createCharacteristicsChart(breedData.stats);
-        }
-        if (breedData.lifespan) {
-            createLifeExpectancyChart(breedData.lifespan);
-        }
-    };
-
-    function createCharacteristicsChart(stats) {
-        const ctx = document.getElementById('characteristicsChart').getContext('2d');
-        
-        if (window.characteristicsChart instanceof Chart) {
-            window.characteristicsChart.destroy();
-        }
-        
-        window.characteristicsChart = new Chart(ctx, {
-            type: 'radar',
-            data: {
-                labels: ['운동량', '그루밍', '훈련난이도', '건강관리', '사회성'],
-                datasets: [{
-                    label: '특성 점수 (1-10)',
-                    data: [
-                        stats.exercise,
-                        stats.grooming,
-                        stats.training,
-                        stats.health,
-                        stats.social
-                    ],
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    pointBackgroundColor: 'rgba(54, 162, 235, 1)',
-                    pointBorderColor: '#fff',
-                    pointHoverBackgroundColor: '#fff',
-                    pointHoverBorderColor: 'rgba(54, 162, 235, 1)'
-                }]
-            },
-            options: {
-                scales: {
-                    r: {
-                        beginAtZero: true,
-                        max: 10,
-                        ticks: {
-                            stepSize: 2
-                        }
-                    }
-                },
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                }
-            }
-        });
-    }
-
-    function createLifeExpectancyChart(lifespan) {
-        const ctx = document.getElementById('lifeExpectancyChart').getContext('2d');
-        
-        if (window.lifeExpectancyChart instanceof Chart) {
-            window.lifeExpectancyChart.destroy();
-        }
-        
-        const [minLife, maxLife] = lifespan.split('-').map(Number);
-        
-        window.lifeExpectancyChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['평균 수명'],
-                datasets: [{
-                    label: '최소',
-                    data: [minLife],
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 1
-                },
-                {
-                    label: '최대',
-                    data: [maxLife],
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 20,
-                        ticks: {
-                            font: {
-                                size: 14
-                            }
-                        }
-                    },
-                    x: {
-                        ticks: {
-                            font: {
-                                size: 14
-                            }
-                        }
-                    }
-                },
-                plugins: {
-                    title: {
-                        display: true,
-                        text: '예상 수명 범위 (년)',
-                        font: {
-                            size: 16
-                        }
-                    },
-                    legend: {
-                        labels: {
-                            font: {
-                                size: 14
-                            }
-                        }
-                    }
-                }
-            }
-        });
-    }
-</script>  
-    </body>
+<body>
+<div class="disclosure">이 페이지는 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</div>
+<header class="top"><div class="wrap">
+  <a class="logo" href="">🐶 <span>강아지 나이 <b>계산기</b></span></a>
+  <nav aria-label="메뉴"><a href="" aria-current="page">나이 계산</a><a href="chart/">나이 환산표</a><a href="breeds/">견종별 나이</a></nav>
+</div></header>
+<main>
+<section class="hero"><div class="wrap">
+  <span class="eyebrow">🐶 35개 견종 + 믹스견</span>
+  <h1>우리 강아지,<br><em>사람으로 치면 몇 살?</em></h1>
+  <p class="lead">"곱하기 7"은 틀린 계산이에요. 견종 크기에 맞춰 사람 나이와 지금 챙겨야 할 것을 알려 드려요.</p>
+</div></section>
+<section class="wrap"><form id="calc" class="panel" data-root="" data-breed="" aria-label="강아지 나이 계산">
+  <div class="field"><label for="breed">품종</label>
+    <select id="breed"><option value="">믹스견 · 목록에 없어요 (아래에서 크기 선택)</option></select></div>
+  <div class="field"><span class="label">크기 <small>(품종을 고르면 자동으로 정해져요)</small></span>
+    <div class="chips" data-key="size"><button type="button" class="chip" data-value="small" aria-pressed="false">소형견 <small>10kg 이하</small></button><button type="button" class="chip" data-value="medium" aria-pressed="false">중형견 <small>10~25kg</small></button><button type="button" class="chip" data-value="large" aria-pressed="false">대형견 <small>25~45kg</small></button><button type="button" class="chip" data-value="giant" aria-pressed="false">초대형견 <small>45kg 이상</small></button></div></div>
+  <div class="field"><span class="label">나이</span>
+    <div class="row"><input id="years" type="number" inputmode="numeric" min="0" max="25" placeholder="살" aria-label="나이 (살)">
+    <input id="months" type="number" inputmode="numeric" min="0" max="11" placeholder="개월 (선택)" aria-label="개월"></div></div>
+  <button class="btn block" type="submit">🐾 사람 나이로 계산하기</button>
+  <p class="hint">입력한 정보는 저장되지 않아요.</p>
+</form>
+<div id="result" class="result" hidden></div></section>
+<section id="goods-section" class="section" hidden><div class="wrap">
+  <h2 class="sec-title" id="goods-title">이 시기에 많이 준비하는 용품</h2>
+  <p class="sec-sub">버튼을 누르면 쿠팡에서 현재 가격을 볼 수 있어요.</p>
+  <div class="goods" id="goods"></div>
+</div></section>
+<section class="section"><div class="wrap">
+  <h2 class="sec-title">많이 찾는 견종</h2>
+  <p class="sec-sub">견종을 누르면 나이 환산표와 관리법을 볼 수 있어요.</p>
+  <div class="breeds"><a href="breeds/maltese/"><div class="ph"><img src="https://blog.kakaocdn.net/dn/bgpC5F/btsLgeMOmdl/yms2UKIoJqbZ5FkdtRhTKk/img.png" alt="말티즈" loading="lazy" width="200" height="200"></div><b>말티즈</b><span>소형견 · 수명 12-15년</span></a><a href="breeds/toy-poodle/"><div class="ph"><img src="https://blog.kakaocdn.net/dn/chzgig/btsLgDrZfGY/0opxKCJVwZpppS5kFP7nM1/img.png" alt="토이 푸들" loading="lazy" width="200" height="200"></div><b>토이 푸들</b><span>소형견 · 수명 12-15년</span></a><a href="breeds/pomeranian/"><div class="ph"><img src="https://blog.kakaocdn.net/dn/7Pbo5/btsLgacwVg7/vHvdnvki5tSVU9W7BIkZhK/img.jpg" alt="포메라니안" loading="lazy" width="200" height="200"></div><b>포메라니안</b><span>소형견 · 수명 12-16년</span></a><a href="breeds/bichon-frise/"><div class="ph"><img src="https://blog.kakaocdn.net/dn/blA3zY/btsLhMnQSBI/0EhGkL0Tmwrca0hK4eGQwk/img.png" alt="비숑 프리제" loading="lazy" width="200" height="200"></div><b>비숑 프리제</b><span>소형견 · 수명 12-15년</span></a><a href="breeds/shih-tzu/"><div class="ph"><img src="https://blog.kakaocdn.net/dn/bqVKHx/btsLhNVxWNM/9KqkYZw0KQ9K1NKHKkv3K/img.png" alt="시츄" loading="lazy" width="200" height="200"></div><b>시츄</b><span>소형견 · 수명 10-18년</span></a><a href="breeds/chihuahua/"><div class="ph"><img src="https://blog.kakaocdn.net/dn/meHzl/btsLf104jcv/s2D8nrldg1QTDX1MwO6Ay0/img.png" alt="치와와" loading="lazy" width="200" height="200"></div><b>치와와</b><span>소형견 · 수명 12-20년</span></a><a href="breeds/welsh-corgi/"><div class="ph"><img src="https://blog.kakaocdn.net/dn/bhaiqu/btsLgZBuz32/8b7PB4dvkXaUlQKkN1X2u1/img.png" alt="웰시 코기" loading="lazy" width="200" height="200"></div><b>웰시 코기</b><span>중형견 · 수명 12-14년</span></a><a href="breeds/golden-retriever/"><div class="ph"><img src="https://blog.kakaocdn.net/dn/MIGgR/btsLgo9BEpx/4KhKzagp75umESsc8ftHbk/img.webp" alt="골든 리트리버" loading="lazy" width="200" height="200"></div><b>골든 리트리버</b><span>대형견 · 수명 10-12년</span></a><a href="breeds/jindo-dog/"><div class="ph"><img src="https://blog.kakaocdn.net/dn/rE2S0/btsLhpzGcmv/chcY4jxgfLwosZW4e9utqK/img.png" alt="진돗개" loading="lazy" width="200" height="200"></div><b>진돗개</b><span>중형견 · 수명 12-15년</span></a><a href="breeds/french-bulldog/"><div class="ph"><img src="https://blog.kakaocdn.net/dn/pTYoD/btsLg4WXWBV/RUEdIKLXKu5y70213IHJ4k/img.png" alt="프렌치 불독" loading="lazy" width="200" height="200"></div><b>프렌치 불독</b><span>소형견 · 수명 10-12년</span></a><a href="breeds/yorkshire-terrier/"><div class="ph">🐶</div><b>요크셔 테리어</b><span>소형견 · 수명 13-16년</span></a><a href="breeds/miniature-schnauzer/"><div class="ph"><img src="https://blog.kakaocdn.net/dn/LgcCv/btsLfHvd4Zu/JLl99w2b3SzDb4GvzxPLiK/img.png" alt="미니어처 슈나우저" loading="lazy" width="200" height="200"></div><b>미니어처 슈나우저</b><span>소형견 · 수명 12-14년</span></a></div>
+  <p style="text-align:center;margin-top:18px"><a class="btn ghost" href="breeds/">전체 35개 견종 →</a> <a class="btn ghost" href="chart/">나이 환산표 →</a></p>
+</div></section>
+<section class="section"><div class="wrap article">
+  <h2>자주 묻는 질문</h2>
+  <div class="faq"><details><summary>강아지 나이는 사람 나이로 어떻게 계산하나요?</summary><p>1살은 약 15세, 2살은 약 24세이고, 그 뒤로는 크기에 따라 1년에 4~7세씩 더합니다. 소형견 10살은 약 56세, 대형견 10살은 약 72세예요.</p></details><details><summary>믹스견은 어떻게 계산하나요?</summary><p>품종 대신 몸무게로 크기를 고르면 됩니다. 10kg 이하는 소형견, 10~25kg은 중형견, 25~45kg은 대형견이에요.</p></details><details><summary>계산 결과가 정확한가요?</summary><p>평균적인 근사치입니다. 같은 나이라도 건강 상태와 생활 습관에 따라 차이가 커요.</p></details></div>
+  <div class="cta"><h2>우리 강아지, 더 똑똑하게 키우고 싶다면</h2><p>집에서 하는 두뇌 놀이와 훈련을 정리했어요.</p><a class="btn" href="http://puppy-intellect-playground.lovable.app/" target="_blank" rel="noopener">천재견 만들기 프로젝트 🐕</a></div>
+</div></section>
+</main>
+<footer class="foot"><div class="wrap">
+  <p>사람 나이 환산은 미국수의사회(AVMA) 안내를 바탕으로 한 근사치이며, 실제 건강 상태는 개체마다 다릅니다. 건강 문제는 동물병원에서 상담하세요.</p>
+  <p>이 페이지는 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+  <p>문의: <a href="mailto:yourmoments@gmail.com">yourmoments@gmail.com</a> · 마지막 업데이트 2026-10-29</p>
+</div></footer>
+<div class="toast" role="status"></div>
+<script src="assets/age.js?v=2026-10-29"></script>
+<script src="assets/data.js?v=2026-10-29"></script>
+<script src="assets/app.js?v=2026-10-29"></script>
+</body>
 </html>

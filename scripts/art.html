@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<!-- 아이콘(?t=icon, 512x512)과 공유 이미지(?t=og, 1200x630) 원본. Edge 헤드리스로 캡처한다. -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  html, body { margin: 0; overflow: hidden; font-family: 'Pretendard Variable', Pretendard, 'Malgun Gothic', sans-serif; }
+  .icon { width: 512px; height: 512px; display: grid; place-items: center; font-size: 300px;
+    background: radial-gradient(circle at 30% 25%, #ffd2a8, #ef7d57 70%); }
+  .og { width: 1200px; height: 630px; box-sizing: border-box; padding: 0 90px; display: flex; flex-direction: column; justify-content: center; position: relative; color: #26324a;
+    background: radial-gradient(700px 420px at 90% 0%, rgba(255, 179, 122, .6), transparent 60%), radial-gradient(500px 400px at 0% 100%, rgba(63, 169, 138, .2), transparent 60%), #fbf7f1; }
+  .og .tag { font-size: 30px; font-weight: 700; color: #ef7d57; }
+  .og h1 { font-size: 92px; line-height: 1.15; margin: 16px 0 24px; letter-spacing: -.04em; font-weight: 800; }
+  .og h1 em { font-style: normal; background: linear-gradient(100deg, #ef7d57, #ffb37a); -webkit-background-clip: text; color: transparent; }
+  .og p { font-size: 32px; color: #6b6f7b; margin: 0; }
+  .og .dog { position: absolute; right: 90px; top: 50%; transform: translateY(-50%); font-size: 240px; }
+</style>
+</head>
+<body>
+<script>
+  var t = new URLSearchParams(location.search).get('t') || 'og';
+  document.body.innerHTML = t === 'icon'
+    ? '<div class="icon">🐶</div>'
+    : '<div class="og"><div class="tag">35개 견종 · 믹스견까지</div><h1>우리 강아지,<br><em>사람 나이로 몇 살?</em></h1><p>크기별 정확한 환산 · 평균 수명 · 시기별 관리</p><div class="dog">🐶</div></div>';
+</script>
+</body>
+</html>
